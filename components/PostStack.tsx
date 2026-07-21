@@ -7,7 +7,7 @@ export default function PostStack({ posts }: { posts: Post[] }) {
   const sorted = [...posts].sort((a, b) => b.number - a.number);
 
   return (
-    <ul className="mx-auto max-w-5xl px-6">
+    <ul className="mx-auto max-w-5xl bg-page px-6">
       {sorted.map((post, index) => {
         const meta = CATEGORY_META[post.category];
         const isLast = index === sorted.length - 1;
@@ -22,8 +22,8 @@ export default function PostStack({ posts }: { posts: Post[] }) {
           >
             <Link
               href={`/posts/${post.slug}`}
-              className={`block ${borderClass} ${meta.bg} ${
-                isLast ? "rounded-card px-8 py-8 sm:px-10" : "rounded-t-card px-8 pb-[66px] pt-8 sm:px-10"
+              className={`block rounded-card ${borderClass} ${meta.bg} ${
+                isLast ? "px-8 py-8 sm:px-10" : "px-8 pb-[66px] pt-8 sm:px-10"
               }`}
             >
               <div className="flex items-center justify-between gap-4">

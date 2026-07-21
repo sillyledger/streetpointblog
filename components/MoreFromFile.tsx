@@ -13,7 +13,7 @@ export default function MoreFromFile({ prev, next }: { prev: Post | null; next: 
       <h2 className="font-mono text-[11px] uppercase tracking-[0.12em] text-faint">
         More from the file
       </h2>
-      <ul className="mt-5">
+      <ul className="mt-5 bg-page">
         {items.map((post, index) => {
           const meta = CATEGORY_META[post.category];
           const isLast = index === items.length - 1;
@@ -28,8 +28,8 @@ export default function MoreFromFile({ prev, next }: { prev: Post | null; next: 
             >
               <Link
                 href={`/posts/${post.slug}`}
-                className={`block ${borderClass} ${meta.bg} ${
-                  isLast ? "rounded-card px-6 py-6" : "rounded-t-card px-6 pb-[50px] pt-6"
+                className={`block rounded-card ${borderClass} ${meta.bg} ${
+                  isLast ? "px-6 py-6" : "px-6 pb-[50px] pt-6"
                 }`}
               >
                 <div className="flex items-center justify-between gap-4">
