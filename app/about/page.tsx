@@ -1,6 +1,8 @@
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 
+export const dynamic = "force-dynamic";
+
 export default function AboutPage() {
   return (
     <>
@@ -10,7 +12,6 @@ export default function AboutPage() {
         <h1 className="font-serif text-[clamp(36px,6vw,56px)] leading-[1.1]">
           About Streetpoint
         </h1>
-        {/* TODO: replace placeholder copy with final About text */}
         <div className="mt-8 space-y-6">
           <p className="text-base leading-[1.8] text-ink">
             Streetpoint is a weekly dispatch of observations, readings, and small experiments — whatever

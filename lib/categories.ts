@@ -1,4 +1,4 @@
-export type Category = "observations" | "readings" | "experiments";
+import { Category } from "./posts";
 
 type CategoryMeta = {
   label: string;

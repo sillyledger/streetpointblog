@@ -1,15 +1,15 @@
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import PostStack from "@/components/PostStack";
-import { getAllPosts } from "@/lib/posts";
-import { CATEGORY_META, Category } from "@/lib/categories";
+import PostCard from "@/components/PostCard";
+import { getPosts, Category } from "@/lib/posts";
+import { CATEGORY_META } from "@/lib/categories";
 
 const CATEGORY_ORDER: Category[] = ["observations", "readings", "experiments"];
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const posts = await getAllPosts();
+  const posts = await getPosts();
 
   return (
     <>
@@ -39,7 +39,17 @@ export default async function Home() {
         </p>
       </section>
 
-      <PostStack posts={posts} />
+      <ul id="index" className="mx-auto max-w-5xl bg-page px-6">
+        {posts.map((post, index) => (
+          <PostCard
+            key={post.slug}
+            post={post}
+            index={index}
+            isLast={index === posts.length - 1}
+            variant="feed"
+          />
+        ))}
+      </ul>
 
       <Footer />
     </>

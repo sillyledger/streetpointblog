@@ -1,33 +1,34 @@
 import { supabase } from "./supabase";
-import { Category } from "./categories";
 
-export type Post = {
-  title: string;
+export type Category = "observations" | "readings" | "experiments";
+
+export interface Post {
   slug: string;
+  title: string;
   category: Category;
   publishedAt: string;
   dispatchNumber: number | null;
   location: string | null;
   content: string;
-};
+}
 
-type PostRow = {
-  title: string;
+interface PostRow {
   slug: string;
+  title: string;
   category: string;
   published_at: string;
   dispatch_number: number | null;
   location: string | null;
   content: string;
-};
+}
 
 const TARGET_SITE = "streetpointblog.com";
-const POST_COLUMNS = "title, slug, category, published_at, dispatch_number, location, content";
+const COLUMNS = "slug, title, category, published_at, dispatch_number, location, content";
 
-function toPost(row: PostRow): Post {
+function mapPost(row: PostRow): Post {
   return {
-    title: row.title,
     slug: row.slug,
+    title: row.title,
     category: row.category.toLowerCase() as Category,
     publishedAt: row.published_at,
     dispatchNumber: row.dispatch_number,
@@ -36,22 +37,22 @@ function toPost(row: PostRow): Post {
   };
 }
 
-export async function getAllPosts(): Promise<Post[]> {
+export async function getPosts(): Promise<Post[]> {
   const { data, error } = await supabase
     .from("posts")
-    .select(POST_COLUMNS)
+    .select(COLUMNS)
     .eq("target_site", TARGET_SITE)
     .eq("status", "published")
     .order("published_at", { ascending: false });
 
   if (error) throw error;
-  return (data as PostRow[] | null ?? []).map(toPost);
+  return ((data ?? []) as unknown as PostRow[]).map(mapPost);
 }
 
 export async function getPostBySlug(slug: string): Promise<Post | null> {
   const { data, error } = await supabase
     .from("posts")
-    .select(POST_COLUMNS)
+    .select(COLUMNS)
     .eq("target_site", TARGET_SITE)
     .eq("status", "published")
     .eq("slug", slug)
@@ -61,15 +62,26 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
     if (error.code === "PGRST116") return null;
     throw error;
   }
-  return data ? toPost(data as PostRow) : null;
+  return data ? mapPost(data as unknown as PostRow) : null;
 }
 
 export async function getAdjacentPosts(slug: string): Promise<{ prev: Post | null; next: Post | null }> {
-  const posts = await getAllPosts();
+  const posts = await getPosts();
   const index = posts.findIndex((post) => post.slug === slug);
   if (index === -1) return { prev: null, next: null };
   return {
     prev: index < posts.length - 1 ? posts[index + 1] : null,
     next: index > 0 ? posts[index - 1] : null,
   };
+}
+
+export function estimateReadTime(html: string): number {
+  const words = html.replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(words / 200));
+}
+
+export function formatDate(dateStr: string): string {
+  return new Date(dateStr)
+    .toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" })
+    .replace(/(\w+) (\d+), (\d+)/, (_, month, day, year) => `${month.toUpperCase()} ${day}, ${year}`);
 }
