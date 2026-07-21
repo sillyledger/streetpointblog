@@ -14,7 +14,7 @@ export type Post = {
 type PostRow = {
   title: string;
   slug: string;
-  category: Category;
+  category: string;
   published_at: string;
   dispatch_number: number | null;
   location: string | null;
@@ -28,7 +28,7 @@ function toPost(row: PostRow): Post {
   return {
     title: row.title,
     slug: row.slug,
-    category: row.category,
+    category: row.category.toLowerCase() as Category,
     publishedAt: row.published_at,
     dispatchNumber: row.dispatch_number,
     location: row.location,
