@@ -27,7 +27,7 @@ export default function MoreFromFile({ prev, next }: { prev: Post | null; next: 
               style={{ ["--index" as string]: index }}
             >
               <Link
-                href={`/posts/${post.slug}`}
+                href={`/mag/${post.slug}`}
                 className={`block rounded-card ${borderClass} ${meta.bg} ${
                   isLast ? "px-6 py-6" : "px-6 pb-[50px] pt-6"
                 }`}

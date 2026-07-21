@@ -7,7 +7,7 @@ import { getAllPosts, getPostBySlug, getAdjacentPosts } from "@/lib/posts";
 import { CATEGORY_META } from "@/lib/categories";
 import { formatDate, formatNumber, readTime } from "@/lib/format";
 
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
 
 export async function generateStaticParams() {
   const posts = await getAllPosts();

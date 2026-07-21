@@ -23,7 +23,7 @@ export default function PostStack({ posts }: { posts: Post[] }) {
             style={{ ["--index" as string]: index }}
           >
             <Link
-              href={`/posts/${post.slug}`}
+              href={`/mag/${post.slug}`}
               className={`block rounded-card ${borderClass} ${meta.bg} ${
                 isLast ? "px-8 py-8 sm:px-10" : "px-8 pb-[66px] pt-8 sm:px-10"
               }`}

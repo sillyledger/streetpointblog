@@ -6,7 +6,7 @@ import { CATEGORY_META, Category } from "@/lib/categories";
 
 const CATEGORY_ORDER: Category[] = ["observations", "readings", "experiments"];
 
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const posts = await getAllPosts();
