@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import NewsletterStrip from "@/components/NewsletterStrip";
 import AuthorFooter from "@/components/AuthorFooter";
 import MoreFromFile from "@/components/MoreFromFile";
 import { getAllPosts, getPostBySlug, getAdjacentPosts } from "@/lib/posts";
@@ -59,7 +58,6 @@ export default async function PostPage({ params }: { params: { slug: string } })
         <MoreFromFile prev={prev} next={next} />
       </article>
 
-      <NewsletterStrip />
       <Footer />
     </>
   );

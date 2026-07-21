@@ -1,6 +1,5 @@
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import NewsletterStrip from "@/components/NewsletterStrip";
 
 export default function AboutPage() {
   return (
@@ -30,7 +29,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <NewsletterStrip />
       <Footer />
     </>
   );

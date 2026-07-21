@@ -1,6 +1,5 @@
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import NewsletterStrip from "@/components/NewsletterStrip";
 import PostStack from "@/components/PostStack";
 import { getAllPosts } from "@/lib/posts";
 import { CATEGORY_META, Category } from "@/lib/categories";
@@ -42,7 +41,6 @@ export default async function Home() {
 
       <PostStack posts={posts} />
 
-      <NewsletterStrip />
       <Footer />
     </>
   );
