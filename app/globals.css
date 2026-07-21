@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-page text-ink font-sans antialiased;
+  }
+}
+
+@layer components {
+  .stack-card {
+    --peek: 24px;
+    position: sticky;
+    top: calc(4.5rem + var(--index, 0) * var(--peek));
+    z-index: var(--index, 0);
+  }
+
+  .stack-card-overlap {
+    margin-top: calc(-1 * var(--peek));
+  }
+
+  @media (min-width: 768px) {
+    .stack-card {
+      --peek: 34px;
+    }
+  }
+
+}
