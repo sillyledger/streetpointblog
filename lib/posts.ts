@@ -75,6 +75,15 @@ export async function getAdjacentPosts(slug: string): Promise<{ prev: Post | nul
   };
 }
 
+export async function getCategoryCounts(): Promise<Record<Category, number>> {
+  const posts = await getPosts();
+  const counts: Record<Category, number> = { observations: 0, readings: 0, experiments: 0 };
+  for (const post of posts) {
+    counts[post.category] += 1;
+  }
+  return counts;
+}
+
 export function estimateReadTime(html: string): number {
   const words = html.replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
   return Math.max(1, Math.round(words / 200));
