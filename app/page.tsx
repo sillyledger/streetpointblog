@@ -2,12 +2,16 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import NewsletterStrip from "@/components/NewsletterStrip";
 import PostStack from "@/components/PostStack";
-import { posts } from "@/lib/posts";
+import { getAllPosts } from "@/lib/posts";
 import { CATEGORY_META, Category } from "@/lib/categories";
 
 const CATEGORY_ORDER: Category[] = ["observations", "readings", "experiments"];
 
-export default function Home() {
+export const revalidate = 300;
+
+export default async function Home() {
+  const posts = await getAllPosts();
+
   return (
     <>
       <Nav />

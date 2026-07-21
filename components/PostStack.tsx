@@ -4,7 +4,9 @@ import { CATEGORY_META } from "@/lib/categories";
 import { formatDate } from "@/lib/format";
 
 export default function PostStack({ posts }: { posts: Post[] }) {
-  const sorted = [...posts].sort((a, b) => b.number - a.number);
+  const sorted = [...posts].sort(
+    (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+  );
 
   return (
     <ul className="mx-auto max-w-5xl bg-page px-6">
@@ -35,7 +37,7 @@ export default function PostStack({ posts }: { posts: Post[] }) {
                 <span
                   className={`font-mono text-[11px] uppercase tracking-[0.12em] ${meta.metaColor}`}
                 >
-                  {formatDate(post.date)}
+                  {formatDate(post.publishedAt)}
                 </span>
               </div>
               <h2

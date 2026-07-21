@@ -37,7 +37,7 @@ export default function MoreFromFile({ prev, next }: { prev: Post | null; next: 
                     {meta.label}
                   </span>
                   <span className={`font-mono text-[11px] uppercase tracking-[0.12em] ${meta.metaColor}`}>
-                    {formatDate(post.date)}
+                    {formatDate(post.publishedAt)}
                   </span>
                 </div>
                 <h3 className={`mt-3 font-serif text-2xl leading-[1.15] ${meta.headlineColor}`}>
