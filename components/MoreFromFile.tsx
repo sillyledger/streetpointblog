@@ -17,6 +17,8 @@ export default function MoreFromFile({ prev, next }: { prev: Post | null; next: 
         {items.map((post, index) => {
           const meta = CATEGORY_META[post.category];
           const isLast = index === items.length - 1;
+          const borderClass =
+            index === 0 || isLast ? "border-[1.5px] border-ink/[0.08]" : "border-t-[1.5px] border-ink/[0.08]";
 
           return (
             <li
@@ -26,7 +28,7 @@ export default function MoreFromFile({ prev, next }: { prev: Post | null; next: 
             >
               <Link
                 href={`/posts/${post.slug}`}
-                className={`block border-[1.5px] border-ink/35 ${meta.bg} ${
+                className={`block ${borderClass} ${meta.bg} ${
                   isLast ? "rounded-card px-6 py-6" : "rounded-t-card px-6 pb-[50px] pt-6"
                 }`}
               >

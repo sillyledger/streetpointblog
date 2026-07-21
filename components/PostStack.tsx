@@ -11,6 +11,8 @@ export default function PostStack({ posts }: { posts: Post[] }) {
       {sorted.map((post, index) => {
         const meta = CATEGORY_META[post.category];
         const isLast = index === sorted.length - 1;
+        const borderClass =
+          index === 0 || isLast ? "border-[1.5px] border-ink/[0.08]" : "border-t-[1.5px] border-ink/[0.08]";
 
         return (
           <li
@@ -20,7 +22,7 @@ export default function PostStack({ posts }: { posts: Post[] }) {
           >
             <Link
               href={`/posts/${post.slug}`}
-              className={`block border-[1.5px] border-ink/35 ${meta.bg} ${
+              className={`block ${borderClass} ${meta.bg} ${
                 isLast ? "rounded-card px-8 py-8 sm:px-10" : "rounded-t-card px-8 pb-[66px] pt-8 sm:px-10"
               }`}
             >

@@ -30,7 +30,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
 
       <article>
         <header className="mx-auto max-w-5xl px-6 pt-6">
-          <div className={`rounded-card border-[1.5px] border-ink/35 ${meta.bg} px-8 py-10 sm:px-12 sm:py-14`}>
+          <div className={`rounded-card border-[1.5px] border-ink/[0.08] ${meta.bg} px-8 py-10 sm:px-12 sm:py-14`}>
             <div className="flex flex-wrap items-center justify-between gap-2">
               <span className={`font-mono text-[11px] uppercase tracking-[0.12em] ${meta.metaColor}`}>
                 {meta.label} · No. {formatNumber(post.number)}
