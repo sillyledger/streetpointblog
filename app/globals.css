@@ -10,7 +10,7 @@
 
 @layer components {
   .prose-streetpoint p {
-    font-size: 1rem;
+    font-size: 17px;
     line-height: 1.8;
     margin-top: 1.5rem;
   }
