@@ -9,23 +9,6 @@
 }
 
 @layer components {
-  .stack-card {
-    --peek: 24px;
-    position: sticky;
-    top: calc(4.5rem + var(--index, 0) * var(--peek));
-    z-index: var(--index, 0);
-  }
-
-  .stack-card-overlap {
-    margin-top: calc(-1 * var(--peek));
-  }
-
-  @media (min-width: 768px) {
-    .stack-card {
-      --peek: 34px;
-    }
-  }
-
   .prose-streetpoint p {
     font-size: 1rem;
     line-height: 1.8;
@@ -36,22 +19,10 @@
     margin-top: 0;
   }
 
-  .prose-streetpoint > p:first-of-type::first-letter {
-    font-family: var(--font-fraunces), serif;
-    color: var(--accent);
-    float: left;
-    font-size: 4.2rem;
-    line-height: 0.82;
-    padding-right: 0.6rem;
-    padding-top: 0.3rem;
-    font-weight: 600;
-  }
-
   .prose-streetpoint blockquote {
     margin: 2rem 0;
     padding-left: 1.25rem;
     border-left: 3px solid var(--accent);
-    font-family: var(--font-fraunces), serif;
     font-style: italic;
     font-size: 1.15rem;
     line-height: 1.6;
@@ -81,7 +52,8 @@
 
   .prose-streetpoint h2,
   .prose-streetpoint h3 {
-    font-family: var(--font-fraunces), serif;
+    font-family: var(--font-archivo), sans-serif;
+    font-weight: 500;
     line-height: 1.15;
     margin-top: 2.5rem;
     margin-bottom: 0.75rem;

@@ -21,23 +21,30 @@ export default async function MagPage({ params }: { params: { slug: string } }) 
 
       <article>
         <header className="mx-auto max-w-5xl px-6 pt-6">
-          <div className={`rounded-card border-[1.5px] border-ink/[0.08] ${meta.bg} px-8 py-10 sm:px-12 sm:py-14`}>
-            <div className="flex flex-wrap items-center justify-between gap-2">
+          <div className={`overflow-hidden rounded-card ${meta.bg}`}>
+            <div
+              className={`flex flex-wrap items-center justify-between gap-2 border-b px-[26px] py-[12px] ${meta.ruleColor}`}
+            >
               <span className={`font-mono text-[11px] uppercase tracking-[0.12em] ${meta.metaColor}`}>
-                {meta.label}
-                {post.dispatchNumber !== null ? ` · No. ${String(post.dispatchNumber).padStart(3, "0")}` : ""}
+                {post.dispatchNumber !== null
+                  ? `No. ${String(post.dispatchNumber).padStart(3, "0")} — ${meta.label}`
+                  : meta.label}
               </span>
               <span className={`font-mono text-[11px] uppercase tracking-[0.12em] ${meta.metaColor}`}>
                 {formatDate(post.publishedAt)} · {estimateReadTime(post.content)} min
               </span>
             </div>
-            <h1 className={`mt-6 font-serif text-[clamp(38px,5vw,44px)] leading-[1.12] ${meta.headlineColor}`}>
-              {post.title}
-            </h1>
-            <p className={`mt-5 font-serif text-lg italic ${meta.metaColor}`}>
-              by Pieter Borremans
-              {post.location ? ` · ${post.location}` : ""}
-            </p>
+            <div className="px-8 py-10 sm:px-12 sm:py-14">
+              <h1
+                className={`font-display text-[clamp(34px,5vw,40px)] font-medium leading-[1.12] tracking-[-0.02em] ${meta.headlineColor}`}
+              >
+                {post.title}
+              </h1>
+              <p className={`mt-5 text-lg italic ${meta.metaColor}`}>
+                by Pieter Borremans
+                {post.location ? ` · ${post.location}` : ""}
+              </p>
+            </div>
           </div>
         </header>
 
@@ -65,15 +72,9 @@ export default async function MagPage({ params }: { params: { slug: string } }) 
             <h2 className="font-mono text-[11px] uppercase tracking-[0.12em] text-faint">
               More from the file
             </h2>
-            <ul className="mt-5 bg-page">
-              {items.map((item, index) => (
-                <PostCard
-                  key={item.slug}
-                  post={item}
-                  index={index}
-                  isLast={index === items.length - 1}
-                  variant="mini"
-                />
+            <ul className="mt-5 flex flex-col gap-3">
+              {items.map((item) => (
+                <PostCard key={item.slug} post={item} variant="mini" />
               ))}
             </ul>
           </section>

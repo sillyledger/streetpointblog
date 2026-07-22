@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Fraunces, DM_Mono, Inter } from "next/font/google";
+import { Archivo, DM_Mono, Inter } from "next/font/google";
 import "./globals.css";
 
-const fraunces = Fraunces({
+const archivo = Archivo({
   subsets: ["latin"],
-  variable: "--font-fraunces",
+  weight: ["500"],
+  variable: "--font-archivo",
   display: "swap",
 });
 
@@ -32,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${dmMono.variable} ${inter.variable}`}>
+    <html lang="en" className={`${archivo.variable} ${dmMono.variable} ${inter.variable}`}>
       <body>{children}</body>
     </html>
   );

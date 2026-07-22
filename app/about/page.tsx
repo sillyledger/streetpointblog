@@ -9,7 +9,7 @@ export default function AboutPage() {
       <Nav />
 
       <section className="mx-auto max-w-[620px] px-6 py-16 sm:py-24">
-        <h1 className="font-serif text-[clamp(36px,6vw,56px)] leading-[1.1]">
+        <h1 className="font-display text-[clamp(36px,6vw,56px)] font-medium leading-[1.1] tracking-[-0.02em]">
           About Streetpoint
         </h1>
         <div className="mt-8 space-y-6">

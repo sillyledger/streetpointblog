@@ -5,30 +5,34 @@ type CategoryMeta = {
   bg: string;
   headlineColor: string;
   metaColor: string;
-  /** Sets --accent to this category's color, for use in prose-streetpoint (drop cap, blockquote, links). */
+  ruleColor: string;
+  /** Sets --accent to this category's deep accent color, for use in prose-streetpoint (blockquote, links). */
   accentVar: string;
 };
 
 export const CATEGORY_META: Record<Category, CategoryMeta> = {
   observations: {
     label: "Observations",
-    bg: "bg-observations",
-    headlineColor: "text-terracotta-headline",
-    metaColor: "text-terracotta-meta",
-    accentVar: "[--accent:theme(colors.observations)]",
+    bg: "bg-observations-tint",
+    headlineColor: "text-observations-headline",
+    metaColor: "text-observations-meta",
+    ruleColor: "border-observations-meta/[0.28]",
+    accentVar: "[--accent:theme(colors.observations.accent)]",
   },
   readings: {
     label: "Readings",
-    bg: "bg-readings",
-    headlineColor: "text-green-headline",
-    metaColor: "text-green-meta",
-    accentVar: "[--accent:theme(colors.readings)]",
+    bg: "bg-readings-tint",
+    headlineColor: "text-readings-headline",
+    metaColor: "text-readings-meta",
+    ruleColor: "border-readings-meta/[0.28]",
+    accentVar: "[--accent:theme(colors.readings.accent)]",
   },
   experiments: {
     label: "Experiments",
-    bg: "bg-experiments",
-    headlineColor: "text-mustard-headline",
-    metaColor: "text-mustard-meta",
-    accentVar: "[--accent:theme(colors.experiments)]",
+    bg: "bg-experiments-tint",
+    headlineColor: "text-experiments-headline",
+    metaColor: "text-experiments-meta",
+    ruleColor: "border-experiments-meta/[0.28]",
+    accentVar: "[--accent:theme(colors.experiments.accent)]",
   },
 };
