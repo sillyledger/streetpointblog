@@ -19,9 +19,9 @@ export default async function Home() {
           preserveAspectRatio="none"
           aria-hidden="true"
         >
-          <line x1="0" y1="0.5" x2="100%" y2="0.5" className="stroke-ink/10" strokeWidth="1" strokeDasharray="1 5" />
-          <line x1="33%" y1="0" x2="33%" y2="100%" className="stroke-ink/10" strokeWidth="1" strokeDasharray="1 5" />
-          <line x1="66%" y1="0" x2="66%" y2="100%" className="stroke-ink/10" strokeWidth="1" strokeDasharray="1 5" />
+          <line x1="0" y1="0.5" x2="100%" y2="0.5" className="stroke-ink/[0.22]" strokeWidth="1.25" strokeDasharray="1 5" />
+          <line x1="33%" y1="0" x2="33%" y2="100%" className="stroke-ink/[0.22]" strokeWidth="1.25" strokeDasharray="1 5" />
+          <line x1="66%" y1="0" x2="66%" y2="100%" className="stroke-ink/[0.22]" strokeWidth="1.25" strokeDasharray="1 5" />
         </svg>
 
         <div className="mx-auto max-w-5xl px-6 pb-[40px] pt-[44px]">
@@ -30,12 +30,12 @@ export default async function Home() {
               <p className="font-mono text-[10.5px] uppercase tracking-[0.12em] text-faint">
                 / A weekly magazine
               </p>
-              <h1 className="mt-4 max-w-xl font-display text-[clamp(36px,6vw,52px)] font-medium leading-[1.04] tracking-[-0.02em]">
+              <h1 className="mt-4 max-w-xl font-display text-[clamp(44px,7vw,64px)] font-semibold leading-[1.0] tracking-[-0.02em]">
                 Whatever proved
                 <br />
                 worth keeping<span className="text-observations-accent">.</span>
               </h1>
-              <p className="mt-5 max-w-[340px] text-[13px] leading-[1.7] text-muted">
+              <p className="mt-5 max-w-[380px] text-base leading-[1.7] text-muted">
                 One dispatch a week. Observations, readings, experiments, no niche, no schedule pressure.
               </p>
             </div>
