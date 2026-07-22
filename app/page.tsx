@@ -1,6 +1,6 @@
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import PostCard from "@/components/PostCard";
+import FeedCard from "@/components/FeedCard";
 import { getPosts, formatShortDate } from "@/lib/posts";
 
 export const dynamic = "force-dynamic";
@@ -25,22 +25,22 @@ export default async function Home() {
         </svg>
 
         <div className="mx-auto max-w-5xl px-6 pb-[40px] pt-[44px]">
-          <div className="grid grid-cols-1 gap-10 sm:grid-cols-[1fr_auto] sm:items-end">
+          <div className="grid grid-cols-1 gap-10 min-[800px]:grid-cols-[1fr_auto] min-[800px]:items-end">
             <div>
-              <p className="font-mono text-[10.5px] uppercase tracking-[0.12em] text-faint">
+              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-faint">
                 / A weekly magazine
               </p>
-              <h1 className="mt-4 max-w-xl font-display text-[clamp(44px,7vw,64px)] font-semibold leading-[1.0] tracking-[-0.02em]">
+              <h1 className="mt-4 max-w-xl font-display text-[clamp(34px,5vw,56px)] font-bold leading-[1.0] tracking-[-0.02em]">
                 Whatever proved
                 <br />
                 worth keeping<span className="text-observations-accent">.</span>
               </h1>
-              <p className="mt-5 max-w-[380px] text-[18px] leading-[1.7] text-muted">
+              <p className="mt-5 max-w-[400px] text-[18px] leading-[1.7] text-muted">
                 One dispatch a week. Observations, readings, experiments, no niche, no schedule pressure.
               </p>
             </div>
 
-            <div className="min-w-[150px] border-l border-ink/25 pl-5">
+            <div className="min-w-[170px] border-t border-ink/25 pt-[22px] min-[800px]:border-t-0 min-[800px]:border-l min-[800px]:pl-[22px] min-[800px]:pt-0">
               <dl>
                 <div className="flex items-center justify-between gap-4 border-b border-dotted border-ink/25 py-2 font-mono text-[12.5px] uppercase tracking-[0.1em]">
                   <dt className="text-faint">Dispatches</dt>
@@ -64,11 +64,15 @@ export default async function Home() {
         </div>
       </section>
 
-      <ul id="index" className="mx-auto flex max-w-5xl flex-col gap-3 px-6 pb-16 sm:pb-24">
-        {posts.map((post) => (
-          <PostCard key={post.slug} post={post} variant="feed" />
-        ))}
-      </ul>
+      <div id="index" className="mx-auto max-w-5xl px-6">
+        <div className="border-t border-ink" />
+        <div className="grid grid-cols-1 min-[800px]:grid-cols-3">
+          {posts.map((post, index) => (
+            <FeedCard key={post.slug} post={post} index={index} />
+          ))}
+        </div>
+        <div className="border-t border-ink/25" />
+      </div>
 
       <Footer />
     </>

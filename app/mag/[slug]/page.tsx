@@ -74,7 +74,7 @@ export default async function MagPage({ params }: { params: { slug: string } }) 
             </h2>
             <ul className="mt-5 flex flex-col gap-3">
               {items.map((item) => (
-                <PostCard key={item.slug} post={item} variant="mini" />
+                <PostCard key={item.slug} post={item} />
               ))}
             </ul>
           </section>

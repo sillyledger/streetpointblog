@@ -2,19 +2,8 @@ import Link from "next/link";
 import { Post, formatDate, estimateReadTime } from "@/lib/posts";
 import { CATEGORY_META } from "@/lib/categories";
 
-export default function PostCard({
-  post,
-  variant = "feed",
-}: {
-  post: Post;
-  variant?: "feed" | "mini";
-}) {
+export default function PostCard({ post }: { post: Post }) {
   const meta = CATEGORY_META[post.category];
-  const Headline = variant === "feed" ? "h2" : "h3";
-  const headlineClass =
-    variant === "feed"
-      ? `font-display text-[24px] font-medium leading-[1.2] ${meta.headlineColor}`
-      : `font-display text-[20px] font-medium leading-[1.2] ${meta.headlineColor}`;
 
   return (
     <li>
@@ -32,7 +21,9 @@ export default function PostCard({
           </span>
         </div>
         <div className="px-[26px] pb-[24px] pt-[20px]">
-          <Headline className={headlineClass}>{post.title}</Headline>
+          <h3 className={`font-display text-[20px] font-medium leading-[1.2] ${meta.headlineColor}`}>
+            {post.title}
+          </h3>
           <span className={`mt-2 block font-mono text-[11px] uppercase tracking-[0.12em] ${meta.metaColor}`}>
             Read →
           </span>

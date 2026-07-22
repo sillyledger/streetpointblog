@@ -10,6 +10,7 @@ export interface Post {
   dispatchNumber: number | null;
   location: string | null;
   content: string;
+  excerpt: string;
 }
 
 interface PostRow {
@@ -25,6 +26,15 @@ interface PostRow {
 const TARGET_SITE = "streetpointblog.com";
 const COLUMNS = "slug, title, category, published_at, dispatch_number, location, content";
 
+function makeExcerpt(html: string): string {
+  const text = html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+  if (text.length <= 140) return text;
+  const truncated = text.slice(0, 140);
+  const lastSpace = truncated.lastIndexOf(" ");
+  const trimmed = lastSpace > 0 ? truncated.slice(0, lastSpace) : truncated;
+  return `${trimmed}…`;
+}
+
 function mapPost(row: PostRow): Post {
   return {
     slug: row.slug,
@@ -34,6 +44,7 @@ function mapPost(row: PostRow): Post {
     dispatchNumber: row.dispatch_number,
     location: row.location,
     content: row.content,
+    excerpt: makeExcerpt(row.content),
   };
 }
 
