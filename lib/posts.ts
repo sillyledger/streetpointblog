@@ -94,3 +94,9 @@ export function formatDate(dateStr: string): string {
     .toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" })
     .replace(/(\w+) (\d+), (\d+)/, (_, month, day, year) => `${month.toUpperCase()} ${day}, ${year}`);
 }
+
+export function formatShortDate(dateStr: string): string {
+  return new Date(dateStr)
+    .toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" })
+    .replace(/(\w+) (\d+)/, (_, month, day) => `${month.toUpperCase()} ${day}`);
+}
