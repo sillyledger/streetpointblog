@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Category, getCategoryCounts } from "@/lib/posts";
-import { CATEGORY_META } from "@/lib/categories";
+import { getCategoryMeta } from "@/lib/categories";
 
 const CATEGORY_ORDER: Category[] = ["observations", "readings", "experiments"];
 
@@ -45,7 +45,7 @@ export default async function Footer() {
                     href="/#index"
                     className="flex items-center justify-between gap-4 text-base text-white/70 hover:text-white"
                   >
-                    <span>{CATEGORY_META[category].label}</span>
+                    <span>{getCategoryMeta(category).label}</span>
                     <span className="text-white/40">{counts[category]}</span>
                   </Link>
                 </li>

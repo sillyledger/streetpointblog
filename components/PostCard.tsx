@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { Post, formatDate, estimateReadTime } from "@/lib/posts";
-import { CATEGORY_META } from "@/lib/categories";
+import { getCategoryMeta } from "@/lib/categories";
 
 export default function PostCard({ post }: { post: Post }) {
-  const meta = CATEGORY_META[post.category];
+  const meta = getCategoryMeta(post.category);
 
   return (
     <li>

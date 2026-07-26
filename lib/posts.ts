@@ -2,6 +2,9 @@ import { supabase } from "./supabase";
 
 export type Category = "observations" | "readings" | "experiments";
 
+const KNOWN_CATEGORIES: readonly Category[] = ["observations", "readings", "experiments"];
+const FALLBACK_CATEGORY: Category = "observations";
+
 export interface Post {
   slug: string;
   title: string;
@@ -17,14 +20,19 @@ interface PostRow {
   slug: string;
   title: string;
   category: string;
-  published_at: string;
+  published_at: string | null;
+  created_at: string;
   dispatch_number: number | null;
   location: string | null;
   content: string;
+  target_site: string;
+  status: string;
 }
 
 const TARGET_SITE = "streetpointblog.com";
-const COLUMNS = "slug, title, category, published_at, dispatch_number, location, content";
+const STATUS_PUBLISHED = "published";
+const COLUMNS =
+  "slug, title, category, published_at, created_at, dispatch_number, location, content, target_site, status";
 
 function makeExcerpt(html: string): string {
   const text = html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
@@ -35,12 +43,40 @@ function makeExcerpt(html: string): string {
   return `${trimmed}…`;
 }
 
+/** Trims and lowercases a raw category value; unrecognized values fall back to 'observations' rather than dropping the post. */
+function normalizeCategory(raw: string | null | undefined): Category {
+  const normalized = (raw ?? "").trim().toLowerCase();
+  return (KNOWN_CATEGORIES as readonly string[]).includes(normalized)
+    ? (normalized as Category)
+    : FALLBACK_CATEGORY;
+}
+
+function normalizeForCompare(value: string | null | undefined): string {
+  return (value ?? "").trim().toLowerCase();
+}
+
+/** published_at can be null for posts that haven't had it backfilled; created_at is always present. */
+function effectiveDate(row: PostRow): string {
+  return row.published_at ?? row.created_at;
+}
+
+function isForThisSitePublished(row: PostRow): boolean {
+  return (
+    normalizeForCompare(row.target_site) === normalizeForCompare(TARGET_SITE) &&
+    normalizeForCompare(row.status) === normalizeForCompare(STATUS_PUBLISHED)
+  );
+}
+
+function sortByDateDesc(rows: PostRow[]): PostRow[] {
+  return [...rows].sort((a, b) => new Date(effectiveDate(b)).getTime() - new Date(effectiveDate(a)).getTime());
+}
+
 function mapPost(row: PostRow): Post {
   return {
     slug: row.slug,
     title: row.title,
-    category: row.category.toLowerCase() as Category,
-    publishedAt: row.published_at,
+    category: normalizeCategory(row.category),
+    publishedAt: effectiveDate(row),
     dispatchNumber: row.dispatch_number,
     location: row.location,
     content: row.content,
@@ -49,31 +85,28 @@ function mapPost(row: PostRow): Post {
 }
 
 export async function getPosts(): Promise<Post[]> {
-  const { data, error } = await supabase
-    .from("posts")
-    .select(COLUMNS)
-    .eq("target_site", TARGET_SITE)
-    .eq("status", "published")
-    .order("published_at", { ascending: false });
+  // Filtering (target_site/status) and ordering happen in JS below, not via
+  // .eq()/.order() on the query, so a stray space or null published_at in the
+  // database can't silently make the query return zero rows.
+  const { data, error } = await supabase.from("posts").select(COLUMNS);
+
+  console.log(`[getPosts] raw rows returned from Supabase: ${data?.length ?? 0}`, error ? { supabaseError: error } : "");
 
   if (error) throw error;
-  return ((data ?? []) as unknown as PostRow[]).map(mapPost);
+
+  const rows = (data ?? []) as unknown as PostRow[];
+  const published = rows.filter(isForThisSitePublished);
+  return sortByDateDesc(published).map(mapPost);
 }
 
 export async function getPostBySlug(slug: string): Promise<Post | null> {
-  const { data, error } = await supabase
-    .from("posts")
-    .select(COLUMNS)
-    .eq("target_site", TARGET_SITE)
-    .eq("status", "published")
-    .eq("slug", slug)
-    .single();
+  const { data, error } = await supabase.from("posts").select(COLUMNS).eq("slug", slug);
 
-  if (error) {
-    if (error.code === "PGRST116") return null;
-    throw error;
-  }
-  return data ? mapPost(data as unknown as PostRow) : null;
+  if (error) throw error;
+
+  const rows = (data ?? []) as unknown as PostRow[];
+  const row = rows.find(isForThisSitePublished);
+  return row ? mapPost(row) : null;
 }
 
 export async function getAdjacentPosts(slug: string): Promise<{ prev: Post | null; next: Post | null }> {

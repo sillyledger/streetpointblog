@@ -46,3 +46,8 @@ export const CATEGORY_META: Record<Category, CategoryMeta> = {
     accentVar: "[--accent:theme(colors.experiments.accent)]",
   },
 };
+
+/** Safe lookup: any category value that isn't one of the three known keys renders with 'observations' styling instead of crashing. */
+export function getCategoryMeta(category: Category): CategoryMeta {
+  return CATEGORY_META[category] ?? CATEGORY_META.observations;
+}

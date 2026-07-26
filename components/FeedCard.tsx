@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Post, formatShortDate } from "@/lib/posts";
-import { CATEGORY_META } from "@/lib/categories";
+import { getCategoryMeta } from "@/lib/categories";
 
 function CategoryIcon({ category }: { category: Post["category"] }) {
   const shared = {
@@ -38,7 +38,7 @@ function CategoryIcon({ category }: { category: Post["category"] }) {
 }
 
 export default function FeedCard({ post, index }: { post: Post; index: number }) {
-  const meta = CATEGORY_META[post.category];
+  const meta = getCategoryMeta(post.category);
   const isFeatured = index === 0;
   const isFirstInRow = index % 3 === 0;
 

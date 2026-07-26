@@ -3,7 +3,7 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import PostCard from "@/components/PostCard";
 import { Post, getPostBySlug, getAdjacentPosts, formatDate, estimateReadTime } from "@/lib/posts";
-import { CATEGORY_META } from "@/lib/categories";
+import { getCategoryMeta } from "@/lib/categories";
 
 export const dynamic = "force-dynamic";
 
@@ -11,7 +11,7 @@ export default async function MagPage({ params }: { params: { slug: string } }) 
   const post = await getPostBySlug(params.slug);
   if (!post) notFound();
 
-  const meta = CATEGORY_META[post.category];
+  const meta = getCategoryMeta(post.category);
   const { prev, next } = await getAdjacentPosts(post.slug);
   const items = [next, prev].filter((p): p is Post => p !== null);
 
