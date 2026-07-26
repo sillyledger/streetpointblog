@@ -64,6 +64,11 @@ export default async function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/affiliate-disclosure" className="text-base text-white/70 hover:text-white">
+                  Affiliate disclaimer
+                </Link>
+              </li>
+              <li>
                 <Link href="/terms" className="text-base text-white/70 hover:text-white">
                   Terms
                 </Link>
