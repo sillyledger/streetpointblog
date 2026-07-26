@@ -6,6 +6,8 @@ type CategoryMeta = {
   headlineColor: string;
   metaColor: string;
   ruleColor: string;
+  /** Divider color (25% opacity) between cells in the post-page spec band. */
+  bandRuleColor: string;
   /** Meta/date-line color used on the homepage feed grid cards. */
   feedMetaColor: string;
   /** Deep accent color class (border-*), used for the featured feed card's left border. */
@@ -21,6 +23,7 @@ export const CATEGORY_META: Record<Category, CategoryMeta> = {
     headlineColor: "text-observations-headline",
     metaColor: "text-observations-meta",
     ruleColor: "border-observations-meta/[0.28]",
+    bandRuleColor: "border-observations-meta/25",
     feedMetaColor: "text-observations-feedMeta",
     accentBorder: "border-observations-accent",
     accentVar: "[--accent:theme(colors.observations.accent)]",
@@ -31,6 +34,7 @@ export const CATEGORY_META: Record<Category, CategoryMeta> = {
     headlineColor: "text-readings-headline",
     metaColor: "text-readings-meta",
     ruleColor: "border-readings-meta/[0.28]",
+    bandRuleColor: "border-readings-meta/25",
     feedMetaColor: "text-readings-feedMeta",
     accentBorder: "border-readings-accent",
     accentVar: "[--accent:theme(colors.readings.accent)]",
@@ -41,6 +45,7 @@ export const CATEGORY_META: Record<Category, CategoryMeta> = {
     headlineColor: "text-experiments-headline",
     metaColor: "text-experiments-meta",
     ruleColor: "border-experiments-meta/[0.28]",
+    bandRuleColor: "border-experiments-meta/25",
     feedMetaColor: "text-experiments-feedMeta",
     accentBorder: "border-experiments-accent",
     accentVar: "[--accent:theme(colors.experiments.accent)]",
