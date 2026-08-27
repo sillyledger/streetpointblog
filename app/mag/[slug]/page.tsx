@@ -1,144 +1,73 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import PostCard from "@/components/PostCard";
-import { Post, getPostBySlug, getAdjacentPosts, formatDate, estimateReadTime } from "@/lib/posts";
+import Bracket from "@/components/Bracket";
+import { getPostBySlug, getAdjacentPosts, formatDate, estimateReadTime } from "@/lib/posts";
 import { getCategoryMeta } from "@/lib/categories";
 
 export const dynamic = "force-dynamic";
-
-function CategoryHeaderIcon({ category }: { category: Post["category"] }) {
-  const shared = {
-    width: 30,
-    height: 30,
-    viewBox: "0 0 30 30",
-    fill: "none",
-    strokeWidth: 1.2,
-    "aria-hidden": true as const,
-  };
-
-  if (category === "observations") {
-    return (
-      <svg {...shared} className="shrink-0 stroke-observations-headline opacity-70">
-        <path d="M15 4 L4 15 L15 26 L26 15 Z" />
-      </svg>
-    );
-  }
-
-  if (category === "readings") {
-    return (
-      <svg {...shared} className="shrink-0 stroke-readings-headline opacity-70">
-        <path d="M5 23 L13 13 L18 18 L25 8" strokeLinecap="round" />
-      </svg>
-    );
-  }
-
-  return (
-    <svg {...shared} className="shrink-0 stroke-experiments-headline opacity-70">
-      <line x1="15" y1="4" x2="15" y2="26" />
-      <line x1="4" y1="15" x2="26" y2="15" />
-    </svg>
-  );
-}
 
 export default async function MagPage({ params }: { params: { slug: string } }) {
   const post = await getPostBySlug(params.slug);
   if (!post) notFound();
 
   const meta = getCategoryMeta(post.category);
-  const { prev, next } = await getAdjacentPosts(post.slug);
-  const items = [next, prev].filter((p): p is Post => p !== null);
-  const cellLabelClasses = `font-mono text-[9.5px] uppercase tracking-[0.16em] ${meta.metaColor}`;
-  const cellValueClasses = `mt-1 font-mono text-[14px] ${meta.headlineColor}`;
+  const { next } = await getAdjacentPosts(post.slug);
 
   return (
     <>
       <Nav />
 
       <article>
-        <header className="mx-auto max-w-5xl px-[26px] pt-6">
-          <div className="border-t border-ink" />
+        <div className="mx-auto max-w-5xl px-6 pb-4">
+          <Link href="/" className="inline-block text-sm font-medium text-ink hover:underline">
+            ← All dispatches
+          </Link>
+        </div>
 
-          <div
-            className={`relative grid ${post.dispatchNumber !== null ? "grid-cols-4" : "grid-cols-3"} ${meta.bg}`}
-          >
-            <span className="absolute -left-1 -top-1 h-2 w-2 bg-corner" aria-hidden="true" />
-            <span className="absolute -right-1 -top-1 h-2 w-2 bg-corner" aria-hidden="true" />
-            <span className="absolute -left-1 -bottom-1 h-2 w-2 bg-corner" aria-hidden="true" />
-            <span className="absolute -right-1 -bottom-1 h-2 w-2 bg-corner" aria-hidden="true" />
+        <Bracket>
+          <h1 className={`font-display text-[clamp(64px,14vw,200px)] font-extrabold uppercase leading-[0.82] ${meta.text}`}>
+            {meta.label}
+          </h1>
+        </Bracket>
 
-            {post.dispatchNumber !== null && (
-              <div className={`border-r px-[20px] py-[14px] ${meta.bandRuleColor}`}>
-                <p className={cellLabelClasses}>DISPATCH</p>
-                <p className={cellValueClasses}>{String(post.dispatchNumber).padStart(3, "0")}</p>
-              </div>
-            )}
-
-            <div className={`border-r px-[20px] py-[14px] ${meta.bandRuleColor}`}>
-              <p className={cellLabelClasses}>CATEGORY</p>
-              <p className={cellValueClasses}>{meta.label.toUpperCase()}</p>
-            </div>
-
-            <div className={`border-r px-[20px] py-[14px] ${meta.bandRuleColor}`}>
-              <p className={cellLabelClasses}>FILED</p>
-              <p className={cellValueClasses}>{formatDate(post.publishedAt)}</p>
-            </div>
-
-            <div className="flex items-center justify-between px-[20px] py-[14px]">
-              <div>
-                <p className={cellLabelClasses}>READ</p>
-                <p className={cellValueClasses}>{estimateReadTime(post.content)} MIN</p>
-              </div>
-              <CategoryHeaderIcon category={post.category} />
-            </div>
-          </div>
-
-          <div className="px-0 pb-[34px] pt-11 text-center">
-            <h1 className="mx-auto max-w-[760px] font-display text-[clamp(32px,5vw,48px)] font-bold leading-[1.02] tracking-[-0.025em]">
-              {post.title}
-            </h1>
-            <p className="mt-4 font-sans text-[13.5px] italic text-muted">
-              by Pieter Borremans
-              {post.location && (
-                <span className="font-mono text-[11.5px] not-italic uppercase text-faint"> · {post.location}</span>
-              )}
-            </p>
-          </div>
-
-          <div className="border-t border-ink/25" />
+        <header className="mx-auto max-w-[640px] px-6 pt-10 text-center">
+          <p className="text-sm text-ink">
+            {formatDate(post.publishedAt)} · {estimateReadTime(post.content)} min read
+          </p>
+          <h2 className="mt-3 text-[clamp(28px,5vw,42px)] font-bold leading-tight text-ink">
+            {post.title}
+          </h2>
+          <p className="mt-4 text-[17px] leading-relaxed text-ink">{post.excerpt}</p>
         </header>
 
-        <div className="mx-auto max-w-[620px] px-6 py-14">
-          <div
-            className={`prose-streetpoint ${meta.accentVar}`}
-            dangerouslySetInnerHTML={{ __html: post.content }}
-          />
+        <div className="mx-auto max-w-[640px] px-6 py-14">
+          <div className="prose-streetpoint" dangerouslySetInnerHTML={{ __html: post.content }} />
         </div>
 
-        <div className="mx-auto max-w-[620px] border-t-[1.5px] border-dashed border-ink/35 px-6 py-10">
-          <div className="flex items-start gap-4">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-ink font-mono text-[11px] text-page">
-              PB
-            </span>
-            <p className="text-base leading-[1.8] text-muted">
-              Pieter Borremans files one dispatch a week from wherever he happens to be looking. Streetpoint is
-              a Ryoka Group publication.
-            </p>
+        <nav className="mx-auto max-w-[640px] border-t border-ink px-6 py-10">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+            {next && (
+              <Link href={`/mag/${next.slug}`} className="group">
+                <span className="block text-sm font-bold uppercase tracking-[0.1em] text-ink">
+                  Up next
+                </span>
+                <span className="mt-1 block text-lg font-semibold text-ink group-hover:underline">
+                  {next.title}
+                </span>
+              </Link>
+            )}
+            <Link href="/" className="group sm:ml-auto sm:text-right">
+              <span className="block text-sm font-bold uppercase tracking-[0.1em] text-ink">
+                &nbsp;
+              </span>
+              <span className="mt-1 block text-lg font-semibold text-ink group-hover:underline">
+                Back to all dispatches
+              </span>
+            </Link>
           </div>
-        </div>
-
-        {items.length > 0 && (
-          <section className="mx-auto max-w-[620px] px-6 py-10">
-            <h2 className="font-mono text-[11px] uppercase tracking-[0.12em] text-faint">
-              More from the file
-            </h2>
-            <ul className="mt-5 flex flex-col gap-3">
-              {items.map((item) => (
-                <PostCard key={item.slug} post={item} />
-              ))}
-            </ul>
-          </section>
-        )}
+        </nav>
       </article>
 
       <Footer />

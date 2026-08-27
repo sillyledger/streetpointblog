@@ -1,24 +1,18 @@
 import type { Metadata } from "next";
-import { Archivo, DM_Mono, Inter } from "next/font/google";
+import { Big_Shoulders_Display, IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
 
-const archivo = Archivo({
+const bigShoulders = Big_Shoulders_Display({
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
-  variable: "--font-archivo",
+  weight: ["800"],
+  variable: "--font-big-shoulders",
   display: "swap",
 });
 
-const dmMono = DM_Mono({
+const ibmPlexSans = IBM_Plex_Sans({
   subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-dm-mono",
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-ibm-plex-sans",
   display: "swap",
 });
 
@@ -33,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${archivo.variable} ${dmMono.variable} ${inter.variable}`}>
+    <html lang="en" className={`${bigShoulders.variable} ${ibmPlexSans.variable}`}>
       <body>{children}</body>
     </html>
   );

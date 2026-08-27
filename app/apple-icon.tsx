@@ -15,9 +15,9 @@ export default function AppleIcon() {
         viewBox="0 0 200 200"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <rect x="30" y="46" width="140" height="42" rx="14" fill="#C4664A" />
-        <rect x="30" y="90" width="140" height="42" rx="14" fill="#31614B" />
-        <rect x="30" y="134" width="140" height="42" rx="14" fill="#D8A63F" />
+        <circle cx="40" cy="100" r="26" fill="#B84A28" />
+        <circle cx="100" cy="100" r="26" fill="#365840" />
+        <circle cx="160" cy="100" r="26" fill="#9C711C" />
       </svg>
     ),
     { ...size },

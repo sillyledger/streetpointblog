@@ -144,3 +144,11 @@ export function formatShortDate(dateStr: string): string {
     .toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" })
     .replace(/(\w+) (\d+)/, (_, month, day) => `${month.toUpperCase()} ${day}`);
 }
+
+/** MM-DD, used for the compact date shown on homepage feed rows. */
+export function formatCompactDate(dateStr: string): string {
+  const date = new Date(dateStr);
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(date.getUTCDate()).padStart(2, "0");
+  return `${month}-${day}`;
+}

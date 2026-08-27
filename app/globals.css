@@ -4,14 +4,14 @@
 
 @layer base {
   body {
-    @apply bg-page text-ink font-sans antialiased;
+    @apply bg-white text-ink font-sans antialiased;
   }
 }
 
 @layer components {
   .prose-streetpoint p {
-    font-size: 17px;
-    line-height: 1.8;
+    font-size: clamp(17px, 1.6vw, 20px);
+    line-height: 1.65;
     margin-top: 1.5rem;
   }
 
@@ -19,10 +19,20 @@
     margin-top: 0;
   }
 
+  .prose-streetpoint > p:first-child::first-letter {
+    font-family: var(--font-big-shoulders), sans-serif;
+    font-weight: 800;
+    color: theme("colors.observations");
+    float: left;
+    font-size: 3.4em;
+    line-height: 0.78;
+    padding-right: 0.09em;
+  }
+
   .prose-streetpoint blockquote {
     margin: 2rem 0;
     padding-left: 1.25rem;
-    border-left: 3px solid var(--accent);
+    border-left: 3px solid theme("colors.ink");
     font-style: italic;
     font-size: 1.15rem;
     line-height: 1.6;
@@ -45,16 +55,15 @@
   }
 
   .prose-streetpoint a {
-    color: var(--accent);
+    color: theme("colors.ink");
     text-decoration: underline;
     text-underline-offset: 2px;
   }
 
   .prose-streetpoint h2,
   .prose-streetpoint h3 {
-    font-family: var(--font-archivo), sans-serif;
-    font-weight: 500;
-    line-height: 1.15;
+    font-weight: 700;
+    line-height: 1.2;
     margin-top: 2.5rem;
     margin-bottom: 0.75rem;
   }

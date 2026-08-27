@@ -1,77 +1,31 @@
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import Bracket from "@/components/Bracket";
 import FeedCard from "@/components/FeedCard";
-import { getPosts, formatShortDate } from "@/lib/posts";
+import { getPosts } from "@/lib/posts";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const posts = await getPosts();
-  const latest = posts[0] ? formatShortDate(posts[0].publishedAt) : "N/A";
 
   return (
     <>
       <Nav />
 
-      <section className="relative">
-        <svg
-          className="pointer-events-none absolute inset-0 -z-10 h-full w-full"
-          preserveAspectRatio="none"
-          aria-hidden="true"
-        >
-          <line x1="0" y1="0.5" x2="100%" y2="0.5" className="stroke-ink/[0.35]" strokeWidth="1.5" strokeDasharray="1 5" />
-          <line x1="33%" y1="0" x2="33%" y2="100%" className="stroke-ink/[0.35]" strokeWidth="1.5" strokeDasharray="1 5" />
-          <line x1="66%" y1="0" x2="66%" y2="100%" className="stroke-ink/[0.35]" strokeWidth="1.5" strokeDasharray="1 5" />
-        </svg>
+      <Bracket>
+        <h1 className="font-display text-[clamp(64px,14vw,200px)] font-extrabold uppercase leading-[0.82] text-ink">
+          StreetPoint
+        </h1>
+      </Bracket>
 
-        <div className="mx-auto max-w-5xl px-6 pb-[40px] pt-[44px]">
-          <div className="grid grid-cols-1 gap-10 min-[800px]:grid-cols-[1fr_auto] min-[800px]:items-end">
-            <div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-faint">
-                / A weekly magazine
-              </p>
-              <h1 className="mt-4 max-w-xl font-display text-[clamp(34px,5vw,56px)] font-bold leading-[1.0] tracking-[-0.02em]">
-                Whatever proved
-                <br />
-                worth keeping<span className="text-observations-accent">.</span>
-              </h1>
-              <p className="mt-5 max-w-[400px] text-[18px] leading-[1.7] text-muted">
-                One dispatch a week. Observations, readings, experiments, no niche, no schedule pressure.
-              </p>
-            </div>
-
-            <div className="min-w-[170px] border-t border-ink/25 pt-[22px] min-[800px]:border-t-0 min-[800px]:border-l min-[800px]:pl-[22px] min-[800px]:pt-0">
-              <dl>
-                <div className="flex items-center justify-between gap-4 border-b border-dotted border-ink/25 py-2 font-mono text-[12.5px] uppercase tracking-[0.1em]">
-                  <dt className="text-faint">Dispatches</dt>
-                  <dd className="text-ink">{String(posts.length).padStart(3, "0")}</dd>
-                </div>
-                <div className="flex items-center justify-between gap-4 border-b border-dotted border-ink/25 py-2 font-mono text-[12.5px] uppercase tracking-[0.1em]">
-                  <dt className="text-faint">Cadence</dt>
-                  <dd className="text-ink">Weekly</dd>
-                </div>
-                <div className="flex items-center justify-between gap-4 border-b border-dotted border-ink/25 py-2 font-mono text-[12.5px] uppercase tracking-[0.1em]">
-                  <dt className="text-faint">Latest</dt>
-                  <dd className="text-ink">{latest}</dd>
-                </div>
-                <div className="flex items-center justify-between gap-4 py-2 font-mono text-[12.5px] uppercase tracking-[0.1em]">
-                  <dt className="text-faint">Filed from</dt>
-                  <dd className="whitespace-nowrap text-ink">TCH / LDN</dd>
-                </div>
-              </dl>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div id="index" className="mx-auto max-w-5xl px-6">
-        <div className="border-t border-ink" />
-        <div className="grid grid-cols-1 min-[800px]:grid-cols-3">
-          {posts.map((post, index) => (
-            <FeedCard key={post.slug} post={post} index={index} />
+      <div className="mx-auto max-w-[720px] px-6 pb-24 pt-14">
+        <p className="text-sm font-bold uppercase tracking-[0.14em] text-ink">Latest</p>
+        <div className="mt-4">
+          {posts.map((post) => (
+            <FeedCard key={post.slug} post={post} />
           ))}
         </div>
-        <div className="border-t border-ink/25" />
       </div>
 
       <Footer />
